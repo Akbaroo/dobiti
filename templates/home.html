@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>خانه</title>
+</head>
+<body>
+    <h1>به وبسایت خوش اومدی اکبر! 👋</h1>
+
+    {% if user.is_authenticated %}
+        <p>سلام {{ user.username }}، خوش برگشتی!</p>
+    {% else %}
+        <p><a href="/signup/">ثبت‌نام</a> یا <a href="/login/">ورود</a></p>
+    {% endif %}
+
+    <h1>آخرین پست‌ها</h1>
+
+    {% for post in posts %}
+        <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content|truncatewords:30 }}</p>
+            <small>{{ post.created_at|date:"Y-m-d H:i" }}</small>
+        </div>
+    {% empty %}
+        <p>هنوز پستی وجود ندارد.</p>
+    {% endfor %}
+</body>
+</html>
