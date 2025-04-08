@@ -8,6 +8,8 @@ class UserManager(UserManager):
 
 class User(AbstractUser):
 
+    objects = UserManager()
+
     class Meta:
         verbose_name = "کاربر"
         verbose_name_plural = "کاربران"
