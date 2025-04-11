@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>پست</title>
+  </head>
+  <body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+
+    <button id="like-btn" data-post-id="{{ post.id }}">
+      {% if user in post.likes.all %} ❤️ {% else %} 🤍 {% endif %}
+    </button>
+    <span id="like-count">{{ post.likes.count }}</span>
+
+    {% if post.video %}
+    <video controls>
+      <source src="{{ post.video.url }}" type="video/mp4" />
+    </video>
+    {% endif %} 
+    
+    {% if post.audio %}
+    <audio controls>
+      <source src="{{ post.audio.url }}" type="audio/mpeg" />
+    </audio>
+    {% endif %} 
+    
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="post.title" width="50%" />
+    {% endif %}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const likeBtn = document.getElementById("like-btn");
+        const likeCount = document.getElementById("like-count");
+
+        likeBtn.addEventListener("click", function () {
+          const postId = this.getAttribute("data-post-id");
+
+          fetch(`/post/${postId}/like/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": "{{ csrf_token }}",
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              likeBtn.textContent = data.liked ? "❤️" : "🤍";
+              likeCount.textContent = data.total_likes;
+
+              likeBtn.classList.remove("like-animate");
+              void likeBtn.offsetWidth;
+              likeBtn.classList.add("like-animate");
+            });
+        });
+      });
+    </script>
+
+    <style>
+      @keyframes pop {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.2);
+        }
+        50% {
+          transform: scale(1.4);
+        }
+        75% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .like-animate {
+        animation: pop 0.2s ease;
+      }
+    </style>
+  </body>
+</html>
