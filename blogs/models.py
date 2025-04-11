@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
@@ -38,6 +39,9 @@ class Post(models.Model):
 
     def total_likes(self):
         return self.likes.count()
+    
+    def get_absolute_url(self):
+        return reverse("blog:post_detail", args=[str(self.id)])
 
     def __str__(self):
         return self.title
@@ -45,7 +49,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, models.CASCADE, blank=True, default=1, related_name='comments')
-    post = models.ForeignKey(Post, models.CASCADE, verbose_name=_("پست"))
+    post = models.ForeignKey(Post, models.CASCADE, verbose_name=_("پست"), related_name='comments')
     text = models.TextField(_("متن"))
 
     def __str__(self):
