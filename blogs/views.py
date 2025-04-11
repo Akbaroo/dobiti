@@ -7,7 +7,7 @@ from .models import Post, Comment
 
 
 def home(request):
-    posts = Post.objects.order_by("-created_at")
+    posts = Post.objects.values('title', 'pk', 'jalali_created_at', 'content', 'likes')
     return render(request, "blogs/home.html", {"posts": posts})
 
 
@@ -26,14 +26,15 @@ def post_detail_view(request, post_id):
 
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = Comment.objects.create(
-                text = form.cleaned_data["text"],
-                user = request.user,
-                post = post,
-            )
+            # breakpoint()
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
             return JsonResponse({
                 'user': comment.user.username,
                 'text': comment.text,
+                'created_at': comment.jalali_created_at
             })
         else:
             return JsonResponse({'error': 'فرم نامعتبر است'}, status=400)

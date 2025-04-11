@@ -34,9 +34,9 @@
     <div id="comments">
         {% for comment in comments %}
             <div class="comment">
-                <strong>{{ comment.user.username }}</strong><br>
+                <strong>{{ comment.user.username }}</strong> - {{ comment.jalali_created_at }}<br>
                 {{ comment.text }}
-            </div>
+            </div><br>
         {% empty %}
             <p>هنوز نظری ثبت نشده است.</p>
         {% endfor %}
@@ -80,31 +80,31 @@
       });
 
       document.querySelector('#comment-form')?.addEventListener('submit', async function(e) {
-          e.preventDefault();
-          const form = e.target;
-          const formData = new FormData(form);
-      
-          const response = await fetch("", {
-              method: "POST",
-              headers: {
-                  'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-              },
-              body: formData
-          });
-      
-          const data = await response.json();
-      
-          if (response.ok) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+    
+        const response = await fetch("", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: formData
+        });
+    
+        const data = await response.json();
+    
+        if (response.ok) {
             const commentsDiv = document.querySelector('#comments');
             const newComment = document.createElement('div');
             newComment.className = 'comment';
-            newComment.innerHTML = `<strong>${data.user}</strong><br>${data.text}`;
+            newComment.innerHTML = `<strong>${data.user}</strong> - ${data.created_at}<br>${data.text}`;
             commentsDiv.prepend(newComment);
             form.reset();
         } else {
             alert(data.error || "خطا در ارسال نظر");
         }
-      });
+    });
       </script>
 
     <style>
