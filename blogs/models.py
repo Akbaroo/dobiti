@@ -44,6 +44,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, blank=True, default=1, related_name='comments')
     post = models.ForeignKey(Post, models.CASCADE, verbose_name=_("پست"))
     text = models.TextField(_("متن"))
 

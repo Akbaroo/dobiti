@@ -28,7 +28,20 @@
     
     {% if post.image %}
     <img src="{{ post.image.url }}" alt="post.title" width="50%" />
-    {% endif %}
+    {% endif %}<br>
+
+    {{ comments.count }}<details>
+      {% for icomment in comments %}
+        <br><b>{{ icomment.user }}</b>
+        <p>{{ icomment.text }}</p>
+      {% endfor %}
+    </details>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ comment.as_p }}
+      <button type="submit">save</button>
+    </form>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
