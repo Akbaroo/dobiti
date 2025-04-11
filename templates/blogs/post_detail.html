@@ -30,18 +30,27 @@
     <img src="{{ post.image.url }}" alt="post.title" width="50%" />
     {% endif %}<br>
 
-    {{ comments.count }}<details>
-      {% for icomment in comments %}
-        <br><b>{{ icomment.user }}</b>
-        <p>{{ icomment.text }}</p>
-      {% endfor %}
-    </details>
+    <h2>نظرات</h2>
+    <div id="comments">
+        {% for comment in comments %}
+            <div class="comment">
+                <strong>{{ comment.user.username }}</strong><br>
+                {{ comment.text }}
+            </div>
+        {% empty %}
+            <p>هنوز نظری ثبت نشده است.</p>
+        {% endfor %}
+    </div>
 
-    <form action="" method="post">
-      {% csrf_token %}
-      {{ comment.as_p }}
-      <button type="submit">save</button>
-    </form>
+    {% if user.is_authenticated %}
+      <form id="comment-form" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">ارسال نظر</button>
+      </form>
+    {% else %}
+      <p>برای ارسال نظر <a href="{% url 'login' %}">وارد شوید</a>.</p>
+    {% endif %}
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -69,7 +78,34 @@
             });
         });
       });
-    </script>
+
+      document.querySelector('#comment-form')?.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const form = e.target;
+          const formData = new FormData(form);
+      
+          const response = await fetch("", {
+              method: "POST",
+              headers: {
+                  'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+              },
+              body: formData
+          });
+      
+          const data = await response.json();
+      
+          if (response.ok) {
+            const commentsDiv = document.querySelector('#comments');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            newComment.innerHTML = `<strong>${data.user}</strong><br>${data.text}`;
+            commentsDiv.prepend(newComment);
+            form.reset();
+        } else {
+            alert(data.error || "خطا در ارسال نظر");
+        }
+      });
+      </script>
 
     <style>
       @keyframes pop {

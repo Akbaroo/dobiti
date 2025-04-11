@@ -8,28 +8,41 @@ from .models import Post, Comment
 
 def home(request):
     posts = Post.objects.order_by("-created_at")
-    return render(request, "home.html", {"posts": posts})
+    return render(request, "blogs/home.html", {"posts": posts})
 
 
 def post_detail_view(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    if request.method == "POST":
-        comment = CommentForm(request.POST)
-        if len(Comment.objects.filter(user=request.user)) > 5:
-            pass # TODO return a error massege
-        elif comment.is_valid():
-            Comment.objects.create(
-                text = comment.cleaned_data["text"],
+    post = get_object_or_404(Post, pk=post_id)
+    comments = post.comments.all()
+    form = CommentForm()
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Login required'}, status=401)
+
+        existing_comments = post.comments.filter(user=request.user)
+        if existing_comments.count() >= 5:
+            return JsonResponse({'error': 'شما بیش از ۵ نظر برای این پست ثبت کرده‌اید!'}, status=403)
+
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = Comment.objects.create(
+                text = form.cleaned_data["text"],
                 user = request.user,
                 post = post,
             )
-    comment = CommentForm()
-    context = {
-        "post": post,
-        'comment': comment,
-        'comments': Comment.objects.all(),
-    }
-    return render(request, "blogs/post_detail.html", context=context)
+            return JsonResponse({
+                'user': comment.user.username,
+                'text': comment.text,
+            })
+        else:
+            return JsonResponse({'error': 'فرم نامعتبر است'}, status=400)
+
+    return render(request, 'blogs/post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'form': form,
+    })
 
 
 

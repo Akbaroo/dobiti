@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField(verbose_name='متن')),
-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blogs.post', verbose_name='پست')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blogs.post', verbose_name='پست', related_name='comments')),
             ],
         ),
     ]
