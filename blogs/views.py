@@ -7,8 +7,16 @@ from .models import Post, Comment
 
 
 def home(request):
-    posts = Post.objects.values('title', 'pk', 'jalali_created_at', 'content', 'likes')
-    return render(request, "blogs/home.html", {"posts": posts})
+    return render(request, "blogs/home.html")
+
+
+def about_view(request):
+    return render(request, "blogs/about.html")
+
+
+def post_view(request):
+    posts = Post.objects.all().order_by("-created_at")
+    return render(request, "blogs/post.html", {"posts": posts})
 
 
 def post_detail_view(request, post_id):
@@ -16,13 +24,15 @@ def post_detail_view(request, post_id):
     comments = post.comments.all()
     form = CommentForm()
 
-    if request.method == 'POST':
+    if request.method == "POST":
         if not request.user.is_authenticated:
-            return JsonResponse({'error': 'Login required'}, status=401)
+            return JsonResponse({"error": "Login required"}, status=401)
 
         existing_comments = post.comments.filter(user=request.user)
         if existing_comments.count() >= 5:
-            return JsonResponse({'error': 'شما بیش از ۵ نظر برای این پست ثبت کرده‌اید!'}, status=403)
+            return JsonResponse(
+                {"error": "شما بیش از ۵ نظر برای این پست ثبت کرده‌اید!"}, status=403
+            )
 
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -31,20 +41,25 @@ def post_detail_view(request, post_id):
             comment.post = post
             comment.user = request.user
             comment.save()
-            return JsonResponse({
-                'user': comment.user.username,
-                'text': comment.text,
-                'created_at': comment.jalali_created_at
-            })
+            return JsonResponse(
+                {
+                    "user": comment.user.username,
+                    "text": comment.text,
+                    "jalali_created_at": comment.jalali_created_at,
+                }
+            )
         else:
-            return JsonResponse({'error': 'فرم نامعتبر است'}, status=400)
+            return JsonResponse({"error": "فرم نامعتبر است"}, status=400)
 
-    return render(request, 'blogs/post_detail.html', {
-        'post': post,
-        'comments': comments,
-        'form': form,
-    })
-
+    return render(
+        request,
+        "blogs/post_detail.html",
+        {
+            "post": post,
+            "comments": comments,
+            "form": form,
+        },
+    )
 
 
 @require_POST
@@ -60,7 +75,4 @@ def like_post_view(request, post_id):
         post.likes.add(user)
         liked = True
 
-    return JsonResponse({
-        'liked': liked,
-        'total_likes': post.likes.count()
-    })
+    return JsonResponse({"liked": liked, "total_likes": post.likes.count()})

@@ -1,33 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>خانه</title>
-</head>
-<body>
-    <h1>به وبسایت خوش اومدی اکبر! 👋</h1>
+{% extends "base.html" %}
 
-    {% if user.is_authenticated %}
-        <p>سلام {{ user.username }}، خوش برگشتی!</p>
-        <a href="{% url 'auth:logout' %}">خروج</a>
-    {% else %}
-        <p><a href="{% url 'auth:signup' %}">ثبت‌نام</a> یا <a href="{% url 'auth:login' %}">ورود</a></p>
-    {% endif %}
 
-    <h1>آخرین پست‌ها</h1>
+{% block content %}
 
-    {% for post in posts %}
-        <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-            <a href="{% url "blog:post_detail" post.pk %}"><h2>{{ post.title }}</h2></a>
-            <p>{{ post.content|truncatewords:30 }}</p>
-            <small>{{ post.jalali_created_at|date:"Y-m-d H:i" }}</small>
-            {% if post.likes %}
-            <p>{{ post.likes }} لایک</p>
-            {% else %}
-            <p>0 لایک</p>
-            {% endif %}
+<div class="container ">
+    <div class="row">
+        <div class="section-title mt-5">
+            <h1>دو بیتی های عاشقانه</h1>
+            <div class="underline"></div>
         </div>
-    {% empty %}
-        <p>هنوز پستی وجود ندارد.</p>
-    {% endfor %}
-</body>
-</html>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+

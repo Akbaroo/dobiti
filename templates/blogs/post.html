@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+پست ها
+{% endblock title %}
+
+{% block content %}
+
+    <!-- Blog -->
+    <div class="">
+        <div class="container ">
+            <div class="row">
+                <div class="section-title mt-5">
+                    <h2>همه ی پست ها</h2>
+                    <div class="underline"></div>
+                </div>
+                
+                <!-- search -->
+                {% comment %} <div class="col-lg-4">
+                    <div class="sidebar-left">
+                        <form class="d-flex">
+                            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div> {% endcomment %}
+                <!-- search -->
+                
+                <div class="col-lg-12 mb-5">
+                    <!-- featured blogs -->
+                    <section class="section" id="featured">
+                        <!-- featured-center -->
+                        <div class="section-center featured-center ">
+                            <div class="row justify-content-start">
+                                {% for post in posts %}
+                                    <div class="col-lg-4">
+                                        <!-- single blog -->
+                                        <article class="blog-card">
+                                            <div class="blog-img-container">
+                                                <a href="{% url "blog:post_detail" post.pk %}"><img src="{{ post.image.url }}" class="blog-img" alt="{{ post.title }}" /></a>
+                                                <p class="blog-date">{{ post.jalali_created_at }}</p>
+                                            </div>
+                                            <!-- blog info -->
+                                            <div class="blog-info">
+                                                <div class="blog-title">
+                                                    <a href="{% url "blog:post_detail" post.pk %}">
+                                                        <h4 style="letter-spacing: 0px;font-size: 1.5rem;">{{ post.title }}</h4>
+                                                    </a>
+                                                </div>
+                                                <p>
+                                                    {{ post.content|truncatewords:30 }}
+                                                </p>
+                                                <!-- blog footer -->
+                                                <div class="blog-footer">
+                                                    <a href="{% url "blog:post_detail" post.pk %}">
+                                                        <p>بیشتر...</p>
+                                                    </a>
+                                                    <strong>
+                                                        {{ post.total_likes }} ❤️ 
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <!-- end of single blog -->
+                                    </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                        <!-- end of blogs center -->
+                    </section>
+                    <!-- end of featured blogs -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end blog -->
+
+{% endblock content %}
+
+
