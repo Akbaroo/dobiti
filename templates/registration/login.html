@@ -1,14 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>ورود</title>
-</head>
-<body>
-    <h2>وارد شدن</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">ورود</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+ورود
+{% endblock title %}
+
+
+{% block content %}
+
+
+<div class="pb-5">
+    <div class="container d-flex justify-content-center">
+        <article class="contact-form">
+            <h3>ورود</h3>
+            <a class="contact-btn btn" href="{% url 'auth:signup' %}">اگه حساب ندارید <strong>ثبت‌نام</strong> کنید.</a>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <!-- inputs -->
+                    {{ form.as_div }}
+                </div>
+                <!-- button -->
+                {% comment %} <p><a href="#">Forgot password?</a> </p> {% endcomment %}
+                <button type="submit" class="contact-btn btn">ورود</button>
+            </form>
+        </article>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
