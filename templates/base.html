@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir='rtl'>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon -->
+    <link href="{% static "/blog/icon.ico" %}" rel="icon" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    {% comment %} <link rel="stylesheet" href="{% static "/blog/bootstrap/css/bootstrap.min.css" %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static "/blog/bootstrap/css/custom-bootstrap.min.css" %}">
+
+    {% comment %} <link rel="stylesheet" href="{% static "/blog/css/style.css" %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static "/blog/css/custom-style.css" %}">
+
+    {% comment %} <link rel="stylesheet" href="{% static "/blog/fontawesome/css/all.min.css" %}">  {% endcomment %}
+    <link rel="stylesheet" href="{% static "/blog/fontawesome/css/custom-all.min.css" %}"> 
+    
+    {% block header %}
+    {% endblock header %}
+
+
+    <title>{% block title %}دو بیتی های عاشقانه{% endblock title %}</title>
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <nav class="nav" id="nav">
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="{% url 'blog:home' %}">خانه</a></li>
+                    <li><a href="{% url 'blog:posts' %}">وبلاگ</a></li>
+                    
+                        <div class="dropdown">
+                            <a class=" dropdown-toggle" href="#" role="button" id="UserDropdown" data-toggle="dropdown"
+                                aria-expanded="false">
+                                {% if user.username %}
+                                    {{ user }}
+                                {% else %}
+                                    حساب
+                                {% endif %}
+                            </a>
+        
+                            <ul class="dropdown-menu" aria-labelledby="UserDropdown">
+                                {% comment %} <li><a class="dropdown-item" href="user.html">User</a></li> {% endcomment %}
+                                {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'auth:logout' %}">خروج</a></li>
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{% url 'auth:login' %}">ورود</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'auth:signup' %}">ثبت‌نام</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    
+                </ul>
+            </div>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+
+    <footer class="footer">
+        <ul class="social-icons mt-5">
+            <!-- single item -->
+            <li class="pr-2" style="padding-left: 0.5rem;">
+                <a href="https://www.twitter.com" class="social-icon">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </li>
+            <!-- end of single item -->
+            <!-- single item -->
+            <li>
+                <a href="https://www.twitter.com" class="social-icon">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </li>
+            <!-- end of single item -->
+            <!-- single item -->
+            <li>
+                <a href="https://www.twitter.com" class="social-icon">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </li>
+            <!-- end of single item -->
+            <!-- single item -->
+            <li>
+                <a href="https://www.twitter.com" class="social-icon">
+                    <i class="fab fa-google-plus"></i>
+                </a>
+            </li>
+            <!-- end of single item -->
+            <!-- single item -->
+            <li>
+                <a href="https://www.twitter.com" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <!-- end of single item -->
+        </ul>
+
+        <p>&copy; <span id="date">دو بیتی های عاشقانه ❤❣ </span></p>
+    </footer>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- Popper.js first, then Bootstrap JS -->
+    <script src="{% static "/blog/js/popper.min.js" %}"></script>
+    <script src="{% static "/blog/bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "/blog/js/script.js" %}"></script>
+    {% block script %}
+    {% endblock script %}
+
+
+</body>
+</html>
