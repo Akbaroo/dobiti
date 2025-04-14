@@ -14,9 +14,9 @@ class Post(models.Model):
     likes = models.ManyToManyField(
         User, related_name="liked_posts", blank=True, verbose_name="لایک ها"
     )
-    image = models.ImageField(upload_to="post_images/", null=True, blank=True)
-    video = models.FileField(upload_to="post_videos/", null=True, blank=True)
-    audio = models.FileField(upload_to="post_audio/", null=True, blank=True)
+    image = models.ImageField(upload_to="post_images/")
+    video = models.FileField(upload_to="post_videos/")
+    audio = models.FileField(upload_to="post_audio/")
 
     # for google
     updated_at = models.DateTimeField(auto_now=True, verbose_name="تاریخ ویرایش")
