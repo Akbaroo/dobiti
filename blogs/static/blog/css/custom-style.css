@@ -6,19 +6,19 @@ Variables
 
 :root {
     /* dark shades of primary color*/
-    --clr-primary-1: hsl(205, 86%, 17%);
+    --clr-primary-1: hsl(205, 100%, 30%);
     /* primary/main color */
-    --clr-primary-5: #49a6e9;
+    --clr-primary-5: #0095ff;
     /* lighter shades of primary color */
-    --clr-primary-8: hsl(205, 86%, 81%);
-    --clr-primary-10: hsl(205, 100%, 96%);
+    --clr-primary-8: hsl(205, 42%, 60%);
+    --clr-primary-10: hsl(207, 81%, 17%);
     /* darkest grey - used for headings */
-    --clr-grey-1: hsl(209, 61%, 16%);
+    --clr-grey-1: hsl(209, 100%, 67%);
     /* grey used for paragraphs */
-    --clr-grey-5: hsl(210, 22%, 49%);
+    --clr-grey-5: hsl(209, 100%, 69%);
     --clr-grey-7: hsl(211, 27%, 70%);
-    --clr-grey-10: hsl(210, 36%, 96%);
-    --clr-white: #fff;
+    --clr-grey-10: hsl(206, 82%, 9%);
+    --clr-white: hsl(207, 81%, 17%);
     --ff-primary: "Roboto", sans-serif;
     --ff-secondary: "Open Sans", sans-serif;
     --transition: all 0.3s linear;
@@ -489,7 +489,7 @@ Footer
 
 .footer {
     padding-bottom: 2rem;
-    background: #222;
+    background: hsl(206, 90%, 8%);
     display: grid;
     place-items: center;
 }
