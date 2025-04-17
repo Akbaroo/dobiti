@@ -1,9 +1,22 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 {{ post.title }}
 {% endblock title %}
 
+{% block header %}
+<link rel="stylesheet" href="{% static "blog/player/plyr.css" %}">
+
+
+<style>
+    :root {
+        --plyr-color-main: #0095ff;
+    }
+</style>
+{% endblock header %}
+
+{% comment %} oncontextmenu="return false;" {% endcomment %}
 {% block content %}
 
     <!-- Blog -->
@@ -11,39 +24,29 @@
         <div class="container ">
             <div class="row">
                 <div class="col-lg-12 mb-5">
-                    {% comment %} <!-- search -->
-                    <div class="sidebar-left">
-                        <form class="d-flex">
-                            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </div> {% endcomment %}
 
                     <!-- featured Details -->
                     <section class="section" id="featured">
                         <div class="detail">
-                            <video class="img-fluid" controls>
+                            <video id="vplayer" class="img-fluid" controls controlsList="nodownload">
                                 <source src="{{ post.video.url }}" type="video/mp4">
                             </video>
-                            {% comment %} <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}"> {% endcomment %}
+                            <!-- audio -->
+                            <div class="sidebar-left">
+                                <audio id="player" controls controlsList="nodownload">
+                                    <source src="{{ post.audio.url }}" type="audio/mp3"> 
+                                </audio>
+                            </div>
                             <div class="post-cat mt-5">
                                 <div class="meta mt-3 ">
-                                    <span>{{ post.jalali_created_at }}</span>
-                                    <a class="btn" href="{{ post.audio.url }}" download>دانلود آهنگ</a>
-                                    <a class="btn" href="{{ post.video.url }}" download>دانلود ویدیو</a>
-                                    <button class="btn" id="like-btn" data-post-id="{{ post.id }}">
+                                    <button style="float: left;" class="btn" id="like-btn" data-post-id="{{ post.id }}">
                                         {% if user in post.likes.all %}{{ post.total_likes }} ❤️ 
                                         {% else %}{{ post.total_likes }} 🤍 
                                         {% endif %}
                                     </button>
+                                    <span>{{ post.jalali_created_at }}</span>
                                 </div>
                                 <br>
-                                <!-- audio -->
-                                <div class="sidebar-left">
-                                    <audio class="form-control" controls>
-                                        <source src="{{ post.audio.url }}" type="audio/mp3">
-                                    </audio>
-                                </div>
                             </div>
                             <div class="article mt-3">
                                 <h1>{{ post.title }}</h1>
@@ -62,20 +65,9 @@
                                         {% endfor %}
                                     </div>
                                     <button type="submit" class="btn">ارسال</button>
-
-                                    {% comment %} <div class="row">
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Full name"
-                                                aria-label="Full name">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="email" class="form-control" placeholder="Email address"
-                                                aria-label="Email address">
-                                        </div>
-                                    </div> {% endcomment %}
                                 </form>
                             {% else %}
-                                <a class="btn btn-outline-success" href="{% url 'auth:login' %}">برای ارسال نظر وارد شوید.</a>
+                                <a class="btn btn-outline-success" href="{% url 'auth:login' %}?next={{ request.path }}">برای ارسال نظر وارد شوید.</a>
                             {% endif %}
                         </div>
 
@@ -179,10 +171,26 @@
             likeBtn.classList.remove("like-animate");
             void likeBtn.offsetWidth;
             likeBtn.classList.add("like-animate");
+            });
         });
     });
-});
 </script>
+
+<script src='{% static "blog/player/plyr.polyfilled.js" %}'></script>
+
+<script>
+    const player = new Plyr('#player', {
+      controls: ['play', 'progress', 'current-time', 'mute', 'volume', "download", "settings"],
+      disableContextMenu: true
+    });
+</script>
+<script>
+    const vplayer = new Plyr('#vplayer', {
+      controls: ['play', 'progress', 'current-time', 'mute', 'volume', "download", "settings", "fullscreen"],
+      disableContextMenu: true
+    });
+</script>
+
 
 <style>
 @keyframes pop {
