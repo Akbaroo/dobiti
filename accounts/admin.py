@@ -15,6 +15,8 @@ class UserAdmin(_UserAdmin):
         "is_active",
         "is_staff",
         "is_superuser",
+        "is_verified",
+        "verification_token",
     )
 
 

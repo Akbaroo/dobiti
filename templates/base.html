@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- favicon -->
-    <link href="{% static "/blog/icon.ico" %}" rel="icon" type="image/png">
+    <link href="{% static "/blog/fav.ico" %}" rel="icon" type="image/png">
 
     <!-- Bootstrap CSS -->
     {% comment %} <link rel="stylesheet" href="{% static "/blog/bootstrap/css/bootstrap.min.css" %}"> {% endcomment %}
@@ -49,10 +49,10 @@
                             <ul class="dropdown-menu" aria-labelledby="UserDropdown">
                                 {% comment %} <li><a class="dropdown-item" href="user.html">User</a></li> {% endcomment %}
                                 {% if user.is_authenticated %}
-                                    <li><a class="dropdown-item" href="{% url 'auth:logout' %}">خروج</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'auth:logout' %}?next={{ request.path }}">خروج</a></li>
                                 {% else %}
-                                    <li><a class="dropdown-item" href="{% url 'auth:login' %}">ورود</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'auth:signup' %}">ثبت‌نام</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'auth:login' %}?next={{ request.path }}">ورود</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'auth:signup' %}?next={{ request.path }}">ثبت‌نام</a></li>
                                 {% endif %}
                             </ul>
                         </div>

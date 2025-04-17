@@ -13,6 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({'class': "form-control mb-3", 'placeholder': 'نام کاربری'})
         self.fields['email'].widget.attrs.update({'class': "form-control mb-3", 'placeholder': 'ایمیل'})
+        self.fields['email'].required = True
         self.fields['password1'].widget.attrs.update({'class': "form-control mb-3", 'placeholder': 'گذرواژه'})
         self.fields['password2'].widget.attrs.update({'class': "form-control mb-3", 'placeholder': 'تأیید گذرواژه'})
 

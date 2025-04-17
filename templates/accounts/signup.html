@@ -12,7 +12,7 @@
     <div class="container d-flex justify-content-center">
         <article class="contact-form">
             <h3>ثبت‌نام</h3>
-            <a class="contact-btn btn" href="{% url 'auth:login' %}">اگه حساب دارید <strong>وارد شوید</strong></a>
+            <a class="contact-btn btn" href="{% url 'auth:login' %}?next={{ request.GET.next|default:'/' }}">اگه حساب دارید <strong>وارد شوید</strong></a>
             <form action="" method="post">
                 {% csrf_token %}
                 <div class="form-group">
