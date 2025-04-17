@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')),
                 ('jalali_updated_at', models.CharField(blank=True, editable=False, max_length=20, null=True, validators=[django.core.validators.RegexValidator('\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}')], verbose_name='تاریخ ویرایش')),
                 ('jalali_created_at', models.CharField(blank=True, editable=False, max_length=20, null=True, validators=[django.core.validators.RegexValidator('\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}')], verbose_name='تاریخ ایجاد')),
-                ('likes', models.ManyToManyField(blank=True, related_name='liked_posts', to=settings.AUTH_USER_MODEL, verbose_name='لایک ها')),
+                ('likes', models.ManyToManyField(blank=True, related_name='liked_posts', to=settings.AUTH_USER_MODEL, verbose_name='لایک ها', editable=False)),
             ],
             options={
                 'verbose_name': 'پست',

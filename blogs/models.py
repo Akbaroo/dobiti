@@ -12,7 +12,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, verbose_name="عنوان")
     content = models.TextField(verbose_name="محتوا")
     likes = models.ManyToManyField(
-        User, related_name="liked_posts", blank=True, verbose_name="لایک ها"
+        User, related_name="liked_posts", blank=True, verbose_name="لایک ها", editable=False
     )
     image = models.ImageField(upload_to="post_images/")
     video = models.FileField(upload_to="post_videos/")
