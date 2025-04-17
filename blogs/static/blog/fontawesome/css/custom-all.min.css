@@ -314,6 +314,11 @@
 }
 /* google */
 
+/* profile */
+.fa-user:before {
+    content: "\f007"
+}
+/* profile */
 
 /* icons */
 
