@@ -1,8 +1,11 @@
-asgiref==3.8.1
+# برای توسعه ی هسته ی سایت
 Django==5.2
-django-allauth==65.7.0
+
+# برای تاریخ شمسی
 persiantools==5.2.0
+
+# برای کار تصایر در پست ها
 pillow==11.1.0
-pytz==2025.2
-sqlparse==0.5.3
-tzdata==2025.2
+
+# برای .env
+python-decouple
