@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+تایید ایمیل
+{% endblock title %}
+
+
+{% block content %}
+
+
+<div class="pb-5">
+    <div class="container d-flex justify-content-center">
+        <article class="contact-form">
+            <h3 class="mt-4">تایید ایمیل</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.as_div }}
+                </div>
+                <button type="submit" class="contact-btn btn">تایید ایمیل</button>
+            </form>
+        </article>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

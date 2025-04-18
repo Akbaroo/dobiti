@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(UserManager):
@@ -7,8 +8,9 @@ class UserManager(UserManager):
 
 
 class User(AbstractUser):
-    is_verified = models.BooleanField(default=False)
-    verification_token = models.CharField(max_length=64, blank=True, null=True) 
+    is_verified = models.BooleanField(_('وضعیت تایید ایمیل'), default=False)
+    verification_token = models.CharField(max_length=64, editable=False, blank=True, null=True)
+    email = models.EmailField(_("آدرس ایمیل"), unique=True)
 
     objects = UserManager()
 

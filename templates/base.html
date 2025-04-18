@@ -53,6 +53,7 @@
                                 {% else %}
                                     <li><a class="dropdown-item" href="{% url 'auth:login' %}?next={{ request.path }}">ورود</a></li>
                                     <li><a class="dropdown-item" href="{% url 'auth:signup' %}?next={{ request.path }}">ثبت‌نام</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'auth:send_email_verify' %}?next={{ request.path }}">تایید ایمیل</a></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -60,7 +61,20 @@
                 </ul>
             </div>
     </nav>
-
+    {% if messages %}
+        <div class="container ">
+            <div class="row">
+                <div class="section-title mt-5">
+                    {% for message in messages %}
+                        <h5>{{ message|safe }}</h5>
+                        <div class="underline"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+            
+    {% endif %}
+    
     {% block content %}
     {% endblock content %}
 
