@@ -1072,7 +1072,7 @@ fieldset:disabled .btn {
     color: #212529;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: #000000;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, .15);
     border-radius: .25rem
@@ -1266,7 +1266,7 @@ fieldset:disabled .btn {
 .dropdown-item:focus,
 .dropdown-item:hover {
     color: #16181b;
-    background-color: #f8f9fa
+    background-color: #292929
 }
 
 .dropdown-item.active,

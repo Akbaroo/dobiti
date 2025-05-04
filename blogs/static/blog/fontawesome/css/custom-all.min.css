@@ -1,4 +1,3 @@
-
 .fa,
 .fab,
 .fad,
@@ -277,6 +276,16 @@
 }
 /* telegram */
 
+/* linkedin */
+.fa-linkedin:before {
+    content: "\f08c"
+}
+
+.fa-linkedin-in:before {
+    content: "\f0e1"
+}
+/* linkedin */
+
 /* instagram */
 .fa-instagram:before {
     content: "\f16d"
@@ -313,6 +322,14 @@
     content: "\f1ee"
 }
 /* google */
+
+.fa-code:before {
+    content: "\f121"
+}
+
+.fa-github:before {
+    content: "\f09b"
+}
 
 /* profile */
 .fa-user:before {
